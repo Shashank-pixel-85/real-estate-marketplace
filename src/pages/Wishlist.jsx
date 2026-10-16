@@ -1,0 +1,7 @@
+import { ArrowRight, Heart } from "lucide-react";
+import { Link } from "react-router-dom";
+import PropertyCard from "../components/PropertyCard.jsx";
+import { properties } from "../data/properties.js";
+import { useApp } from "../context/AppContext.jsx";
+
+export default function Wishlist(){const {wishlist}=useApp();const saved=properties.filter(p=>wishlist.includes(p.id));return <div><section className="page-hero"><div className="container"><span className="eyebrow">Your personal shortlist</span><h1>Homes you've <em>saved.</em></h1><p>Keep the places you love close while you decide what feels right.</p></div></section><section className="container simple-section">{saved.length?<><div className="section-heading"><h2>Your saved homes <small>({saved.length})</small></h2><Link className="text-link" to="/compare">Compare saved homes <ArrowRight size={16}/></Link></div><div className="property-grid">{saved.map((p,i)=><PropertyCard key={p.id} property={p} index={i}/>)}</div></>:<div className="empty-state"><span><Heart size={25}/></span><h2>Your shortlist starts here</h2><p>Tap the heart on any home to save it here for later.</p><Link to="/properties" className="button button-dark">Explore homes <ArrowRight size={16}/></Link></div>}</section></div>}

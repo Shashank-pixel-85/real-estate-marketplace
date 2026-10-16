@@ -1,0 +1,34 @@
+import { motion } from "framer-motion";
+import { ArrowDownRight, ArrowRight, ArrowUpRight, Check, Compass, KeyRound, ShieldCheck, Sparkles } from "lucide-react";
+import { Link } from "react-router-dom";
+import SearchBar from "../components/SearchBar.jsx";
+import PropertyCard from "../components/PropertyCard.jsx";
+import { properties } from "../data/properties.js";
+
+const categories = [
+ {name:"Apartments",count:"120+ homes",image:"https://images.unsplash.com/photo-1600607687644-c7171b42498f?auto=format&fit=crop&w=800&q=80",query:"apartment"},
+ {name:"Independent homes",count:"86+ homes",image:"https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=800&q=80",query:"house"},
+ {name:"Villas",count:"42+ homes",image:"https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=80",query:"villa"}
+];
+export default function Home() {
+ const featured = properties.filter((p)=>p.featured);
+ return <div>
+  <section className="hero"><div className="hero-ring"/><div className="container hero-grid">
+   <motion.div className="hero-copy" initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} transition={{duration:.6}}>
+    <span className="eyebrow"><i/> A more considered way to move</span><h1>Find a place<br/>to <em>belong.</em></h1>
+    <p>A good home is more than an address. Discover spaces that fit your life, your pace, and what matters most.</p>
+    <div className="hero-proof"><div className="avatar-stack"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=80&q=80" alt=""/><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=80&q=80" alt=""/><img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=80&q=80" alt=""/></div><span><strong>2,400+</strong> people found their place</span><span className="stars">★★★★★</span></div>
+   </motion.div>
+   <motion.div className="hero-visual" initial={{opacity:0,scale:.97}} animate={{opacity:1,scale:1}} transition={{duration:.7,delay:.12}}><img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1500&q=90" alt="Sunlit contemporary home"/><div className="hero-image-shade"/><div className="hero-caption"><small>THE HOME EDIT · 01</small><span>A little more room<br/>for living.</span><Link to="/properties/willow-house" aria-label="Explore featured home"><ArrowUpRight/></Link></div><div className="floating-note"><span><Sparkles size={18}/></span><div><strong>Thoughtfully selected</strong><small>Homes with a little more heart</small></div></div></motion.div>
+  </div><div className="container search-wrap"><SearchBar/></div><div className="container hero-bottom"><span>SCROLL TO DISCOVER</span><ArrowDownRight size={16}/><i/><span>01 / 04</span></div></section>
+
+  <section className="section"><div className="container"><div className="section-heading"><div><span className="eyebrow">A few good places</span><h2>Homes worth <em>a closer look.</em></h2><p>Every home has a story. These are some of our favourites.</p></div><Link className="text-link" to="/properties">Explore all homes <ArrowRight size={17}/></Link></div><div className="property-grid">{featured.map((property,index)=><PropertyCard key={property.id} property={property} index={index}/>)}</div></div></section>
+
+  <section className="category-section section"><div className="container"><div className="section-heading"><div><span className="eyebrow">Find your kind of space</span><h2>Different lives.<br/><em>Different homes.</em></h2></div><p className="side-note">From first apartments to forever homes, start with the space that feels right.</p></div><div className="category-grid">{categories.map((item,index)=><Link to={`/properties?q=${item.query}`} className="category-card" key={item.name}><img src={item.image} alt={item.name} loading="lazy"/><span className="category-shade"/><small>0{index+1}</small><div><span><strong>{item.name}</strong><small>{item.count}</small></span><i><ArrowUpRight size={20}/></i></div></Link>)}</div></div></section>
+
+  <section className="story-section"><div className="container story-grid"><div className="story-image"><img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=85" alt="Warm modern living room" loading="lazy"/><span className="story-stamp"><small>EST.</small><strong>2024</strong><small>WITH INTENTION</small></span></div><div className="story-copy"><span className="eyebrow light">Not just square feet</span><h2>Finding home<br/>should feel <em>human.</em></h2><p>Property decisions are big life decisions. We bring good design, local knowledge and honest guidance together, so the process feels a little less overwhelming.</p><div className="story-points"><div><Compass/><span><strong>Local insight</strong><small>Know the neighbourhood, not just the listing.</small></span></div><div><ShieldCheck/><span><strong>Clear, considered advice</strong><small>Real guidance from people who listen.</small></span></div><div><KeyRound/><span><strong>Your next chapter</strong><small>Space for the life you're building.</small></span></div></div><Link to="/agents" className="button button-cream">Meet our people <ArrowRight size={17}/></Link></div></div></section>
+
+  <section className="section process-section"><div className="container"><div className="section-heading"><div><span className="eyebrow">A simpler journey</span><h2>From looking to <em>living.</em></h2></div><p className="side-note">Less noise. Better choices. A home that makes sense for you.</p></div><div className="process-grid">{[{icon:Compass,title:"Explore with intent",text:"Use thoughtful filters to find homes that match your needs and budget."},{icon:Check,title:"Compare what matters",text:"Save favourites, compare details and make decisions with confidence."},{icon:KeyRound,title:"Make it yours",text:"Connect with an advisor and take the next step at your own pace."}].map((item,index)=><div className="process-step" key={item.title}><span className="step-number">0{index+1}</span><i><item.icon size={22}/></i><h3>{item.title}</h3><p>{item.text}</p></div>)}</div></div></section>
+  <section className="cta-section"><div className="container cta-inner"><div><span className="eyebrow light">Your next chapter starts here</span><h2>Ready to feel<br/><em>at home?</em></h2></div><div><p>Let's find a space that fits the way you want to live.</p><Link to="/properties" className="button button-cream">Explore the homes <ArrowRight size={17}/></Link></div><span className="cta-watermark">e.</span></div></section>
+ </div>;
+}

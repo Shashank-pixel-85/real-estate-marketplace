@@ -1,0 +1,3 @@
+import { ArrowLeft, House } from "lucide-react";
+import { Link } from "react-router-dom";
+export default function NotFound(){return <section className="not-found"><span><House size={28}/></span><small className="eyebrow">A little off the map</small><h1>This isn't <em>the place.</em></h1><p>We couldn't find the page you were looking for. Let's get you back to the good stuff.</p><Link to="/" className="button button-dark"><ArrowLeft size={16}/> Back home</Link></section>}

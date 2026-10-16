@@ -1,0 +1,10 @@
+import { ArrowRight, Scale, X } from "lucide-react";
+import { Link } from "react-router-dom";
+import { properties } from "../data/properties.js";
+import { useApp } from "../context/AppContext.jsx";
+
+export default function Compare(){
+ const {comparison,toggleComparison}=useApp();const selected=properties.filter(p=>comparison.includes(p.id));
+ const rows=[["Price",p=>p.priceLabel],["Listing",p=>p.type==="Rent"?"For rent":"For sale"],["Location",p=>p.location],["Bedrooms",p=>p.beds],["Bathrooms",p=>p.baths],["Area",p=>`${p.area.toLocaleString("en-IN")} sq ft`],["Highlights",p=>p.amenities.slice(0,3).join(", ")]];
+ return <div><section className="page-hero"><div className="container"><span className="eyebrow">Side by side, simply</span><h1>Compare your <em>shortlist.</em></h1><p>Put the details next to each other and see what fits best.</p></div></section><section className="container simple-section">{selected.length?<><div className="section-heading"><h2>Your comparison <small>({selected.length}/3)</small></h2><p>Compare up to three properties at once.</p></div><div className="table-wrap"><table className="compare-table"><thead><tr><th>Property details</th>{selected.map(p=><th key={p.id}><div className="compare-head"><img src={p.image} alt={p.title}/><button onClick={()=>toggleComparison(p.id)} aria-label={`Remove ${p.title}`}><X size={15}/></button><Link to={`/properties/${p.id}`}>{p.title}</Link></div></th>)}{selected.length<3&&<th><Link to="/properties" className="add-home">+ Add a home</Link></th>}</tr></thead><tbody>{rows.map(([label,get])=><tr key={label}><th>{label}</th>{selected.map(p=><td key={p.id}>{get(p)}</td>)}{selected.length<3&&<td>—</td>}</tr>)}</tbody></table></div><p className="demo-note">Prices and property details are sample data for this demonstration.</p></>:<div className="empty-state"><span><Scale size={25}/></span><h2>Make a thoughtful comparison</h2><p>Add up to three homes using the compare icon on any property card.</p><Link to="/properties" className="button button-dark">Browse homes <ArrowRight size={16}/></Link></div>}</section></div>;
+}
